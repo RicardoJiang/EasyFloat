@@ -1,4 +1,4 @@
-package com.zj.easyfloat
+package com.zj.floatlibrary
 
 import android.app.Activity
 import android.app.Application
@@ -14,10 +14,33 @@ import com.imuxuan.floatingview.FloatingView
 import com.imuxuan.floatingview.MagnetViewListener
 
 object FloatManager : Application.ActivityLifecycleCallbacks {
-    private var mLayoutParams = getFloatingLayoutParams()
     private var translationX = 0f
     private var translationY = 0f
-    private val blackList = listOf(ThirdActivity::class.java)
+
+    private var mLayoutParams = getFloatingLayoutParams()
+    private val blackList = mutableListOf<Class<*>>()
+    private var mLayout: Int = 0
+    private var mListener: ((View?) -> Unit)? = null
+
+    fun layout(layout: Int): FloatManager {
+        this.mLayout = layout
+        return this
+    }
+
+    fun layoutParams(layoutParams: FrameLayout.LayoutParams): FloatManager {
+        this.mLayoutParams = layoutParams
+        return this
+    }
+
+    fun blackList(blackList: MutableList<Class<*>>): FloatManager {
+        this.blackList.addAll(blackList)
+        return this
+    }
+
+    fun listener(listener: ((View?) -> Unit)): FloatManager {
+        this.mListener = listener
+        return this
+    }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
 
@@ -78,9 +101,12 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
     }
 
     private fun initShow(activity: Activity) {
+        if (FloatingView.get().view != null) {
+            return
+        }
         activity.let {
             FloatingView.get().customView(
-                EnFloatingView(activity, R.layout.layout_float_view)
+                EnFloatingView(activity, mLayout)
             )
             FloatingView.get().layoutParams(mLayoutParams)
             FloatingView.get().attach(it)
@@ -88,9 +114,7 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
                 view.translationX = translationX
                 view.translationY = translationY
             }
-            listener {
-                Log.i("tiaoshi","here")
-            }
+            initListener()
         }
     }
 
@@ -105,14 +129,14 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
         activity.application.unregisterActivityLifecycleCallbacks(this)
     }
 
-    fun listener(listener: ((View?) -> Unit)) {
+    private fun initListener() {
         FloatingView.get().listener(object : MagnetViewListener {
             override fun onRemove(magnetView: FloatingMagnetView?) {
 
             }
 
             override fun onClick(magnetView: FloatingMagnetView?) {
-                listener.invoke(magnetView)
+                mListener?.invoke(magnetView)
             }
 
         })

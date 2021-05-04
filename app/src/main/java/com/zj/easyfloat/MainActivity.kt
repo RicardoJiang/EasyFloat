@@ -5,11 +5,22 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.zj.floatlibrary.FloatManager
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initFloat()
+    }
+
+    private fun initFloat(){
+        FloatManager.layout(R.layout.layout_float_view)
+            .blackList(mutableListOf(ThirdActivity::class.java))
+            .listener {
+                Log.i("tiaoshi","here")
+            }
+            .show(this)
     }
 
     fun show(view: View) {
