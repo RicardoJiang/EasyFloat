@@ -13,20 +13,30 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
     private var mLayoutParams = getFloatingLayoutParams()
     private var translationX = 0f
     private var translationY = 0f
+    private val blackList = listOf(ThirdActivity::class.java)
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
 
     }
 
     override fun onActivityStarted(activity: Activity) {
+        if (isActivityInValid(activity)){
+            return
+        }
         initShow(activity)
     }
 
     override fun onActivityResumed(activity: Activity) {
+        if (isActivityInValid(activity)){
+            return
+        }
         FloatingView.get().add()
     }
 
     override fun onActivityPaused(activity: Activity) {
+        if (isActivityInValid(activity)){
+            return
+        }
         FloatingView.get().view?.let {
             translationX = it.translationX
             translationY = it.translationY
@@ -35,6 +45,9 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityStopped(activity: Activity) {
+        if (isActivityInValid(activity)){
+            return
+        }
         FloatingView.get().detach(activity)
     }
 
@@ -44,6 +57,10 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityDestroyed(activity: Activity) {
 
+    }
+
+    private fun isActivityInValid(activity: Activity): Boolean {
+        return blackList.contains(activity::class.java)
     }
 
     private fun getFloatingLayoutParams(): FrameLayout.LayoutParams {
