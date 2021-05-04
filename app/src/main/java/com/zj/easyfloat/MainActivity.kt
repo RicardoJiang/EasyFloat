@@ -1,5 +1,6 @@
 package com.zj.easyfloat
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -16,5 +17,15 @@ class MainActivity : AppCompatActivity() {
 
     fun dismiss(view: View) {
         FloatManager.dismiss(this)
+    }
+
+    fun jumpOne(view: View) {
+        val intent = Intent(this, SecondActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun jumpTwo(view: View) {
+        val intent = Intent(this, ThirdActivity::class.java)
+        startActivity(intent)
     }
 }

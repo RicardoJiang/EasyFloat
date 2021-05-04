@@ -10,6 +10,10 @@ import com.imuxuan.floatingview.EnFloatingView
 import com.imuxuan.floatingview.FloatingView
 
 object FloatManager : Application.ActivityLifecycleCallbacks {
+    private var mLayoutParams = getFloatingLayoutParams()
+    private var translationX = 0f
+    private var translationY = 0f
+
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
 
     }
@@ -23,6 +27,10 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityPaused(activity: Activity) {
+        FloatingView.get().view?.let {
+            translationX = it.translationX
+            translationY = it.translationY
+        }
         FloatingView.get().remove()
     }
 
@@ -53,8 +61,12 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
             FloatingView.get().customView(
                 EnFloatingView(activity, R.layout.layout_float_view)
             )
-            FloatingView.get().layoutParams(getFloatingLayoutParams())
+            FloatingView.get().layoutParams(mLayoutParams)
             FloatingView.get().attach(it)
+            FloatingView.get()?.view?.let { view ->
+                view.translationX = translationX
+                view.translationY = translationY
+            }
         }
     }
 
