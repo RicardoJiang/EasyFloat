@@ -8,21 +8,14 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.imuxuan.floatingview.EnFloatingView
 import com.imuxuan.floatingview.FloatingView
-import com.zj.easyfloat.widget.FloatingBall
 
-class FloatManager : Application.ActivityLifecycleCallbacks {
+object FloatManager : Application.ActivityLifecycleCallbacks {
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
 
     }
 
     override fun onActivityStarted(activity: Activity) {
-        activity.let {
-            FloatingView.get().customView(
-                EnFloatingView(activity, R.layout.layout_float_view)
-            )
-            FloatingView.get().layoutParams(getFloatingLayoutParams())
-            FloatingView.get().attach(it)
-        }
+        initShow(activity)
     }
 
     override fun onActivityResumed(activity: Activity) {
@@ -53,5 +46,26 @@ class FloatManager : Application.ActivityLifecycleCallbacks {
         params.gravity = Gravity.BOTTOM or Gravity.START
         params.setMargins(0, params.topMargin, params.rightMargin, 500)
         return params
+    }
+
+    private fun initShow(activity: Activity) {
+        activity.let {
+            FloatingView.get().customView(
+                EnFloatingView(activity, R.layout.layout_float_view)
+            )
+            FloatingView.get().layoutParams(getFloatingLayoutParams())
+            FloatingView.get().attach(it)
+        }
+    }
+
+    fun show(activity: Activity) {
+        initShow(activity)
+        activity.application.registerActivityLifecycleCallbacks(this)
+    }
+
+    fun dismiss(activity: Activity) {
+        FloatingView.get().remove()
+        FloatingView.get().detach(activity)
+        activity.application.unregisterActivityLifecycleCallbacks(this)
     }
 }
