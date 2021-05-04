@@ -3,11 +3,15 @@ package com.zj.easyfloat
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.imuxuan.floatingview.EnFloatingView
+import com.imuxuan.floatingview.FloatingMagnetView
 import com.imuxuan.floatingview.FloatingView
+import com.imuxuan.floatingview.MagnetViewListener
 
 object FloatManager : Application.ActivityLifecycleCallbacks {
     private var mLayoutParams = getFloatingLayoutParams()
@@ -20,21 +24,21 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityStarted(activity: Activity) {
-        if (isActivityInValid(activity)){
+        if (isActivityInValid(activity)) {
             return
         }
         initShow(activity)
     }
 
     override fun onActivityResumed(activity: Activity) {
-        if (isActivityInValid(activity)){
+        if (isActivityInValid(activity)) {
             return
         }
         FloatingView.get().add()
     }
 
     override fun onActivityPaused(activity: Activity) {
-        if (isActivityInValid(activity)){
+        if (isActivityInValid(activity)) {
             return
         }
         FloatingView.get().view?.let {
@@ -45,7 +49,7 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityStopped(activity: Activity) {
-        if (isActivityInValid(activity)){
+        if (isActivityInValid(activity)) {
             return
         }
         FloatingView.get().detach(activity)
@@ -84,6 +88,9 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
                 view.translationX = translationX
                 view.translationY = translationY
             }
+            listener {
+                Log.i("tiaoshi","here")
+            }
         }
     }
 
@@ -96,5 +103,18 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
         FloatingView.get().remove()
         FloatingView.get().detach(activity)
         activity.application.unregisterActivityLifecycleCallbacks(this)
+    }
+
+    fun listener(listener: ((View?) -> Unit)) {
+        FloatingView.get().listener(object : MagnetViewListener {
+            override fun onRemove(magnetView: FloatingMagnetView?) {
+
+            }
+
+            override fun onClick(magnetView: FloatingMagnetView?) {
+                listener.invoke(magnetView)
+            }
+
+        })
     }
 }
