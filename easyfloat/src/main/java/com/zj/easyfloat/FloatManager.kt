@@ -1,4 +1,4 @@
-package com.zj.floatlibrary
+package com.zj.easyfloat
 
 import android.app.Activity
 import android.app.Application
@@ -23,22 +23,22 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
     private var mListener: ((View?) -> Unit)? = null
 
     fun layout(layout: Int): FloatManager {
-        this.mLayout = layout
+        mLayout = layout
         return this
     }
 
     fun layoutParams(layoutParams: FrameLayout.LayoutParams): FloatManager {
-        this.mLayoutParams = layoutParams
+        mLayoutParams = layoutParams
         return this
     }
 
     fun blackList(blackList: MutableList<Class<*>>): FloatManager {
-        this.blackList.addAll(blackList)
+        FloatManager.blackList.addAll(blackList)
         return this
     }
 
     fun listener(listener: ((View?) -> Unit)): FloatManager {
-        this.mListener = listener
+        mListener = listener
         return this
     }
 

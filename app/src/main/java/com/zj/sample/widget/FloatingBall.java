@@ -1,4 +1,4 @@
-package com.zj.easyfloat.widget;
+package com.zj.sample.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;

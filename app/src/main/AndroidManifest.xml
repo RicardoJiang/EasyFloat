@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zj.easyfloat">
+    package="com.zj.sample">
 
     <application
         android:allowBackup="true"
@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyFloat">
-        <activity android:name=".ThirdActivity"></activity>
-        <activity android:name=".SecondActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.zj.sample.ThirdActivity"></activity>
+        <activity android:name="com.zj.sample.SecondActivity" />
+        <activity android:name="com.zj.sample.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.zj.easyfloat
+package com.zj.sample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

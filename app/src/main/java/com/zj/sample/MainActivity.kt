@@ -1,11 +1,11 @@
-package com.zj.easyfloat
+package com.zj.sample
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.zj.floatlibrary.FloatManager
+import com.zj.easyfloat.FloatManager
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

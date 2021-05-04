@@ -38,3 +38,10 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'com.imuxuan:floatingview:1.6'
 }
+
+ext {
+    PUBLISH_GROUP_ID = "io.github.shenzhen2017"        //项目包名
+    PUBLISH_ARTIFACT_ID = 'easyfloat'            //项目名
+    PUBLISH_VERSION = "0.0.2"                    //版本号
+}
+apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
