@@ -3,7 +3,6 @@ package com.zj.easyfloat
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
@@ -14,9 +13,6 @@ import com.imuxuan.floatingview.FloatingView
 import com.imuxuan.floatingview.MagnetViewListener
 
 object FloatManager : Application.ActivityLifecycleCallbacks {
-    private var translationX = 0f
-    private var translationY = 0f
-
     private var mLayoutParams = getFloatingLayoutParams()
     private val blackList = mutableListOf<Class<*>>()
     private var mLayout: Int = 0
@@ -57,18 +53,9 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
         if (isActivityInValid(activity)) {
             return
         }
-        FloatingView.get().add()
     }
 
     override fun onActivityPaused(activity: Activity) {
-        if (isActivityInValid(activity)) {
-            return
-        }
-        FloatingView.get().view?.let {
-            translationX = it.translationX
-            translationY = it.translationY
-        }
-        FloatingView.get().remove()
     }
 
     override fun onActivityStopped(activity: Activity) {
@@ -101,19 +88,14 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
     }
 
     private fun initShow(activity: Activity) {
-        if (FloatingView.get().view != null) {
-            return
-        }
         activity.let {
-            FloatingView.get().customView(
-                EnFloatingView(activity, mLayout)
-            )
+            if (FloatingView.get().view==null){
+                FloatingView.get().customView(
+                    EnFloatingView(activity, mLayout)
+                )
+            }
             FloatingView.get().layoutParams(mLayoutParams)
             FloatingView.get().attach(it)
-            FloatingView.get()?.view?.let { view ->
-                view.translationX = translationX
-                view.translationY = translationY
-            }
             initListener()
         }
     }
