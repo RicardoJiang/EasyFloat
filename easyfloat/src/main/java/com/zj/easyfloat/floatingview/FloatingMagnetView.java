@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -67,9 +68,6 @@ public class FloatingMagnetView extends FrameLayout {
         }
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                changeOriginalTouchParams(event);
-                updateSize();
-                mMoveAnimator.stop();
                 break;
             case MotionEvent.ACTION_MOVE:
                 updateViewPosition(event);
@@ -214,5 +212,32 @@ public class FloatingMagnetView extends FrameLayout {
         if (isLandscape) {
             mPortraitY = getY();
         }
+    }
+
+    private float touchDownX;
+
+    private void initTouchDown(MotionEvent ev) {
+        changeOriginalTouchParams(ev);
+        updateSize();
+        mMoveAnimator.stop();
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        boolean intercepted = false;
+        switch (ev.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                intercepted = false;
+                touchDownX = ev.getX();
+                initTouchDown(ev);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                intercepted = Math.abs(touchDownX - ev.getX()) >= ViewConfiguration.get(getContext()).getScaledTouchSlop();
+                break;
+            case MotionEvent.ACTION_UP:
+                intercepted = false;
+                break;
+        }
+        return intercepted;
     }
 }

@@ -18,7 +18,12 @@ class MainActivity : AppCompatActivity() {
         FloatManager.layout(R.layout.layout_float_view)
             .blackList(mutableListOf(ThirdActivity::class.java))
             .listener {
-                Log.i("tiaoshi","here")
+                it?.findViewById<View>(R.id.floating_ball)?.setOnClickListener {
+                    Log.i("tiaoshi","here")
+                }
+                it?.findViewById<View>(R.id.floating_ball_one)?.setOnClickListener {
+                    Log.i("tiaoshi","here1")
+                }
             }
             .show(this)
     }

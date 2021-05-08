@@ -39,7 +39,7 @@ public class FloatingBall extends View {
         mTextPaint = new TextPaint();
         mTextPaint.setColor(Color.BLACK);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
-        mTextPaint.setTextSize(sp2px(context, 16));
+        mTextPaint.setTextSize(sp2px(context, 12));
     }
 
     @Override

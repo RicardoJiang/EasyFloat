@@ -96,7 +96,7 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
             }
             FloatingView.get().layoutParams(mLayoutParams)
             FloatingView.get().attach(it)
-            initListener()
+            mListener?.invoke(FloatingView.get().view)
         }
     }
 

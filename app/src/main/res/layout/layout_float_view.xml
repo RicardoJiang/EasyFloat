@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zj.sample.widget.FloatingBall xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="60dp"
-    android:layout_height="60dp" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.zj.sample.widget.FloatingBall
+        android:id="@+id/floating_ball_one"
+        android:layout_width="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="40dp" />
+
+    <com.zj.sample.widget.FloatingBall
+        android:id="@+id/floating_ball_two"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp" />
+
+    <com.zj.sample.widget.FloatingBall
+        android:id="@+id/floating_ball"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp" />
+</LinearLayout>
