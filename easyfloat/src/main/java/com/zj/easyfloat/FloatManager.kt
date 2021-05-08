@@ -8,9 +8,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.zj.easyfloat.floatingview.EnFloatingView
-import com.zj.easyfloat.floatingview.FloatingMagnetView
 import com.zj.easyfloat.floatingview.FloatingView
-import com.zj.easyfloat.floatingview.MagnetViewListener
 
 object FloatManager : Application.ActivityLifecycleCallbacks {
     private var mLayoutParams = getFloatingLayoutParams()
@@ -109,18 +107,5 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
         FloatingView.get().remove()
         FloatingView.get().detach(activity)
         activity.application.unregisterActivityLifecycleCallbacks(this)
-    }
-
-    private fun initListener() {
-        FloatingView.get().listener(object : MagnetViewListener {
-            override fun onRemove(magnetView: FloatingMagnetView?) {
-
-            }
-
-            override fun onClick(magnetView: FloatingMagnetView?) {
-                mListener?.invoke(magnetView)
-            }
-
-        })
     }
 }
