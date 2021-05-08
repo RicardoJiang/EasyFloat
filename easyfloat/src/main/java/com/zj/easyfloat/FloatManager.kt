@@ -7,10 +7,10 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
-import com.imuxuan.floatingview.EnFloatingView
-import com.imuxuan.floatingview.FloatingMagnetView
-import com.imuxuan.floatingview.FloatingView
-import com.imuxuan.floatingview.MagnetViewListener
+import com.zj.easyfloat.floatingview.EnFloatingView
+import com.zj.easyfloat.floatingview.FloatingMagnetView
+import com.zj.easyfloat.floatingview.FloatingView
+import com.zj.easyfloat.floatingview.MagnetViewListener
 
 object FloatManager : Application.ActivityLifecycleCallbacks {
     private var mLayoutParams = getFloatingLayoutParams()
