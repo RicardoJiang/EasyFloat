@@ -14,17 +14,31 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initFloat()
     }
 
-    private fun initFloat() {
-        EasyFloat.layout(R.layout.layout_float_view)
+    fun show(view: View) {
+        EasyFloat
+            .layout(R.layout.layout_float_view)
             .blackList(mutableListOf(ThirdActivity::class.java))
             .layoutParams(initLayoutParams())
             .listener {
                 initListener(it)
             }
             .show(this)
+    }
+
+    fun dismiss(view: View) {
+        EasyFloat.dismiss(this)
+    }
+
+    fun jumpOne(view: View) {
+        val intent = Intent(this, SecondActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun jumpTwo(view: View) {
+        val intent = Intent(this, ThirdActivity::class.java)
+        startActivity(intent)
     }
 
     private fun initLayoutParams(): FrameLayout.LayoutParams {
@@ -52,24 +66,6 @@ class MainActivity : AppCompatActivity() {
         root?.findViewById<View>(R.id.floating_ball_one)?.setOnClickListener {
             Toast.makeText(this, "click", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    fun show(view: View) {
-        EasyFloat.show(this)
-    }
-
-    fun dismiss(view: View) {
-        EasyFloat.dismiss(this)
-    }
-
-    fun jumpOne(view: View) {
-        val intent = Intent(this, SecondActivity::class.java)
-        startActivity(intent)
-    }
-
-    fun jumpTwo(view: View) {
-        val intent = Intent(this, ThirdActivity::class.java)
-        startActivity(intent)
     }
 
     private fun animScale(view: View, isCollapse: Boolean) {
