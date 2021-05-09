@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.zj.easyfloat.FloatManager
+import com.zj.easyfloat.EasyFloat
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFloat() {
-        FloatManager.layout(R.layout.layout_float_view)
+        EasyFloat.layout(R.layout.layout_float_view)
             .blackList(mutableListOf(ThirdActivity::class.java))
             .layoutParams(initLayoutParams())
             .listener {
@@ -55,11 +55,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun show(view: View) {
-        FloatManager.show(this)
+        EasyFloat.show(this)
     }
 
     fun dismiss(view: View) {
-        FloatManager.dismiss(this)
+        EasyFloat.dismiss(this)
     }
 
     fun jumpOne(view: View) {

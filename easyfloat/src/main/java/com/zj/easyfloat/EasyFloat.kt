@@ -6,32 +6,31 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.RelativeLayout
 import com.zj.easyfloat.floatingview.EnFloatingView
 import com.zj.easyfloat.floatingview.FloatingView
 
-object FloatManager : Application.ActivityLifecycleCallbacks {
+object EasyFloat : Application.ActivityLifecycleCallbacks {
     private var mLayoutParams = getFloatingLayoutParams()
     private val blackList = mutableListOf<Class<*>>()
     private var mLayout: Int = 0
     private var mListener: ((View?) -> Unit)? = null
 
-    fun layout(layout: Int): FloatManager {
+    fun layout(layout: Int): EasyFloat {
         mLayout = layout
         return this
     }
 
-    fun layoutParams(layoutParams: FrameLayout.LayoutParams): FloatManager {
+    fun layoutParams(layoutParams: FrameLayout.LayoutParams): EasyFloat {
         mLayoutParams = layoutParams
         return this
     }
 
-    fun blackList(blackList: MutableList<Class<*>>): FloatManager {
-        FloatManager.blackList.addAll(blackList)
+    fun blackList(blackList: MutableList<Class<*>>): EasyFloat {
+        EasyFloat.blackList.addAll(blackList)
         return this
     }
 
-    fun listener(listener: ((View?) -> Unit)): FloatManager {
+    fun listener(listener: ((View?) -> Unit)): EasyFloat {
         mListener = listener
         return this
     }
@@ -87,7 +86,7 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
 
     private fun initShow(activity: Activity) {
         activity.let {
-            if (FloatingView.get().view==null){
+            if (FloatingView.get().view == null) {
                 FloatingView.get().customView(
                     EnFloatingView(activity, mLayout)
                 )
