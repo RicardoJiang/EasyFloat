@@ -63,6 +63,7 @@ dependencies {
 ## 主要原理
 我们都知道，当我们需要设置布局的时候，是通过`setContentView`设置的
 而`setContentView`实际上是将我们的布局添加到了`DecoreView`上,布局层级如下所示：
+
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a78fc9a822ce4edaab449d7c5a401843~tplv-k3u1fbpfcp-watermark.image)
 
 1.`Activity` 类似于一个框架，负责容器生命周期及活动，窗口通过 `Window` 来管理；
