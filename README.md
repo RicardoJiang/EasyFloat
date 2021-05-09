@@ -8,7 +8,7 @@
 ## 效果图
 首先看下最终的效果图
 
-![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/289199fad10649ab9484955e42a2a34c~tplv-k3u1fbpfcp-watermark.image)
+![](https://raw.githubusercontent.com/shenzhen2017/newImage/master/blog10/p1.gif)
 
 ## 特性
 - 1.不需要申请权限，可以直接打开悬浮窗，使用便捷
@@ -52,6 +52,7 @@ dependencies {
 ```
 
 如上所示：
+
 1.通过`layout`指定自定义布局
 
 2.通过`blackList`指定不展示悬浮窗界面
@@ -71,7 +72,7 @@ dependencies {
 
 而`setContentView`实际上是将我们的布局添加到了`DecoreView`上,布局层级如下所示：
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a78fc9a822ce4edaab449d7c5a401843~tplv-k3u1fbpfcp-watermark.image)
+![](https://raw.githubusercontent.com/shenzhen2017/newImage/master/blog4/p1.gif)
 
 1.`Activity` 类似于一个框架，负责容器生命周期及活动，窗口通过 `Window` 来管理；
 
