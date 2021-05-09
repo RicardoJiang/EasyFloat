@@ -1,11 +1,12 @@
 package com.zj.sample
 
 import android.animation.ValueAnimator
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.zj.easyfloat.FloatManager
 
@@ -19,23 +20,38 @@ class MainActivity : AppCompatActivity() {
     private fun initFloat() {
         FloatManager.layout(R.layout.layout_float_view)
             .blackList(mutableListOf(ThirdActivity::class.java))
+            .layoutParams(initLayoutParams())
             .listener {
-                val rootView = it?.findViewById<View>(R.id.ll_root)
-                it?.findViewById<View>(R.id.floating_ball)?.setOnClickListener {
-                    if (rootView != null) {
-                        if (rootView.getTag(R.id.animate_type) == null) {
-                            rootView.setTag(R.id.animate_type, true)
-                        }
-                        val isCollapse = rootView.getTag(R.id.animate_type) as Boolean
-                        animScale(rootView, isCollapse)
-                        rootView.setTag(R.id.animate_type, isCollapse.not())
-                    }
-                }
-                it?.findViewById<View>(R.id.floating_ball_one)?.setOnClickListener {
-                    Log.i("tiaoshi", "here1")
-                }
+                initListener(it)
             }
             .show(this)
+    }
+
+    private fun initLayoutParams(): FrameLayout.LayoutParams {
+        val params = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+        params.gravity = Gravity.BOTTOM or Gravity.END
+        params.setMargins(0, params.topMargin, params.rightMargin, 500)
+        return params
+    }
+
+    private fun initListener(root: View?) {
+        val rootView = root?.findViewById<View>(R.id.ll_root)
+        root?.findViewById<View>(R.id.floating_ball)?.setOnClickListener {
+            if (rootView != null) {
+                if (rootView.getTag(R.id.animate_type) == null) {
+                    rootView.setTag(R.id.animate_type, true)
+                }
+                val isCollapse = rootView.getTag(R.id.animate_type) as Boolean
+                animScale(rootView, isCollapse)
+                rootView.setTag(R.id.animate_type, isCollapse.not())
+            }
+        }
+        root?.findViewById<View>(R.id.floating_ball_one)?.setOnClickListener {
+            Toast.makeText(this, "click", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun show(view: View) {
@@ -57,8 +73,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun animScale(view: View, isCollapse: Boolean) {
-        val start = if (isCollapse) dip2px(160f) else dip2px(60f)
-        val end = if (isCollapse) dip2px(60f) else dip2px(160f)
+        val start = if (isCollapse) dip2px(172f) else dip2px(60f)
+        val end = if (isCollapse) dip2px(60f) else dip2px(172f)
 
         val scaleBig = ValueAnimator.ofFloat(start, end)
         scaleBig.duration = 1000

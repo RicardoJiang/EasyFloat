@@ -77,8 +77,8 @@ object FloatManager : Application.ActivityLifecycleCallbacks {
 
     private fun getFloatingLayoutParams(): FrameLayout.LayoutParams {
         val params = FrameLayout.LayoutParams(
-            RelativeLayout.LayoutParams.WRAP_CONTENT,
-            RelativeLayout.LayoutParams.WRAP_CONTENT
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
         )
         params.gravity = Gravity.BOTTOM or Gravity.START
         params.setMargins(0, params.topMargin, params.rightMargin, 500)
