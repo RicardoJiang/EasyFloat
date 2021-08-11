@@ -36,6 +36,8 @@ public class FloatingMagnetView extends FrameLayout {
     private int mStatusBarHeight;
     private boolean isNearestLeft = true;
     private float mPortraitY;
+    private boolean dragEnable = true;
+    private boolean autoMoveToEdge = true;
 
     public void setMagnetViewListener(MagnetViewListener magnetViewListener) {
         this.mMagnetViewListener = magnetViewListener;
@@ -61,6 +63,20 @@ public class FloatingMagnetView extends FrameLayout {
 //        updateSize();
     }
 
+    /**
+     * @param dragEnable 是否可拖动
+     */
+    public void updateDragState(boolean dragEnable) {
+        this.dragEnable = dragEnable;
+    }
+
+    /**
+     * @param autoMoveToEdge 是否自动到边缘
+     */
+    public void setAutoMoveToEdge(boolean autoMoveToEdge) {
+        this.autoMoveToEdge = autoMoveToEdge;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event == null) {
@@ -74,7 +90,9 @@ public class FloatingMagnetView extends FrameLayout {
                 break;
             case MotionEvent.ACTION_UP:
                 clearPortraitY();
-                moveToEdge();
+                if (autoMoveToEdge) {
+                    moveToEdge();
+                }
                 if (isOnClickEvent()) {
                     dealClickEvent();
                 }
@@ -94,24 +112,32 @@ public class FloatingMagnetView extends FrameLayout {
     }
 
     private void updateViewPosition(MotionEvent event) {
+        //dragEnable
+        if (!dragEnable) return;
+        //占满width或height时不用变
+        LayoutParams params = (LayoutParams) getLayoutParams();
         //限制不可超出屏幕宽度
         float desX = mOriginalX + event.getRawX() - mOriginalRawX;
-        if (desX < 0) {
-            desX = MARGIN_EDGE;
+        if (params.width == FrameLayout.LayoutParams.WRAP_CONTENT) {
+            if (desX < 0) {
+                desX = MARGIN_EDGE;
+            }
+            if (desX > mScreenWidth) {
+                desX = mScreenWidth - MARGIN_EDGE;
+            }
+            setX(desX);
         }
-        if (desX > mScreenWidth) {
-            desX = mScreenWidth - MARGIN_EDGE;
-        }
-        setX(desX);
         // 限制不可超出屏幕高度
         float desY = mOriginalY + event.getRawY() - mOriginalRawY;
-        if (desY < mStatusBarHeight) {
-            desY = mStatusBarHeight;
+        if (params.height == FrameLayout.LayoutParams.WRAP_CONTENT) {
+            if (desY < mStatusBarHeight) {
+                desY = mStatusBarHeight;
+            }
+            if (desY > mScreenHeight - getHeight()) {
+                desY = mScreenHeight - getHeight();
+            }
+            setY(desY);
         }
-        if (desY > mScreenHeight - getHeight()) {
-            desY = mScreenHeight - getHeight();
-        }
-        setY(desY);
     }
 
     private void changeOriginalTouchParams(MotionEvent event) {
@@ -133,6 +159,8 @@ public class FloatingMagnetView extends FrameLayout {
     }
 
     public void moveToEdge() {
+        //dragEnable
+        if (!dragEnable) return;
         moveToEdge(isNearestLeft(), false);
     }
 

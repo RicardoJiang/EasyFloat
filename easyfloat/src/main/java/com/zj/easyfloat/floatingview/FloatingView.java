@@ -167,6 +167,22 @@ public class FloatingView implements IFloatingView {
         return this;
     }
 
+    @Override
+    public FloatingView dragEnable(boolean dragEnable) {
+        if (mEnFloatingView != null) {
+            mEnFloatingView.updateDragState(dragEnable);
+        }
+        return this;
+    }
+
+    @Override
+    public FloatingView setAutoMoveToEdge(boolean autoMoveToEdge) {
+        if (mEnFloatingView != null) {
+            mEnFloatingView.setAutoMoveToEdge(autoMoveToEdge);
+        }
+        return this;
+    }
+
     private void addViewToWindow(final View view) {
         if (getContainer() == null) {
             return;

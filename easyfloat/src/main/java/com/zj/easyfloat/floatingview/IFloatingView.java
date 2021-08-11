@@ -38,4 +38,8 @@ public interface IFloatingView {
 
     FloatingView listener(MagnetViewListener magnetViewListener);
 
+    FloatingView dragEnable(boolean dragEnable);
+
+    FloatingView setAutoMoveToEdge(boolean autoMoveToEdge);
+
 }
