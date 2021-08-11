@@ -7,13 +7,20 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import com.zj.easyfloat.floatingview.EnFloatingView
+import com.zj.easyfloat.floatingview.FloatingMagnetView
 import com.zj.easyfloat.floatingview.FloatingView
+import com.zj.easyfloat.floatingview.MagnetViewListener
 
 object EasyFloat : Application.ActivityLifecycleCallbacks {
     private var mLayoutParams = getFloatingLayoutParams()
     private val blackList = mutableListOf<Class<*>>()
     private var mLayout: Int = 0
-    private var mListener: ((View?) -> Unit)? = null
+
+    //编辑添加点击和移除事件, 拖动状态，靠边状态
+    private var onRemoveListener: ((FloatingMagnetView) -> Unit)? = null
+    private var onClickListener: ((FloatingMagnetView) -> Unit)? = null
+    private var dragEnable = true
+    private var autoMoveToEdge = true
 
     fun layout(layout: Int): EasyFloat {
         mLayout = layout
@@ -30,9 +37,39 @@ object EasyFloat : Application.ActivityLifecycleCallbacks {
         return this
     }
 
-    fun listener(listener: ((View?) -> Unit)): EasyFloat {
-        mListener = listener
+    fun listener(
+        onRemoveListener: ((View?) -> Unit)? = null,
+        onClickListener: ((View) -> Unit)? = null
+    ): EasyFloat {
+        this.onRemoveListener = onRemoveListener
+        this.onClickListener = onClickListener
         return this
+    }
+
+    /**
+     * 是否可拖拽（位置是否固定）
+     */
+    fun dragEnable(dragEnable: Boolean): EasyFloat {
+        this.dragEnable = dragEnable
+        FloatingView.get().view?.updateDragState(dragEnable)
+        return this
+    }
+
+    fun isDragEnable(): Boolean {
+        return dragEnable
+    }
+
+    /**
+     * 是否自动靠边
+     */
+    fun setAutoMoveToEdge(autoMoveToEdge: Boolean): EasyFloat {
+        this.autoMoveToEdge = autoMoveToEdge
+        FloatingView.get().view?.setAutoMoveToEdge(autoMoveToEdge)
+        return this
+    }
+
+    fun isAutoMoveToEdge(): Boolean {
+        return autoMoveToEdge
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -91,9 +128,19 @@ object EasyFloat : Application.ActivityLifecycleCallbacks {
                     EnFloatingView(activity, mLayout)
                 )
             }
-            FloatingView.get().layoutParams(mLayoutParams)
-            FloatingView.get().attach(it)
-            mListener?.invoke(FloatingView.get().view)
+            FloatingView.get().run {
+                layoutParams(mLayoutParams)
+                attach(it)
+                dragEnable(dragEnable)
+                this.listener(object : MagnetViewListener {
+                    override fun onRemove(magnetView: FloatingMagnetView) {
+                        onRemoveListener?.invoke(magnetView)
+                    }
+                    override fun onClick(magnetView: FloatingMagnetView) {
+                        onClickListener?.invoke(magnetView)
+                    }
+                })
+            }
         }
     }
 
