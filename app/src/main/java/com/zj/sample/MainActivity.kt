@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
             .layout(R.layout.layout_float_view)
             .blackList(mutableListOf(ThirdActivity::class.java))
             .layoutParams(initLayoutParams())
+            .dragEnable(true)
+            .setAutoMoveToEdge(true)
             .listener {
                 initListener(it)
             }

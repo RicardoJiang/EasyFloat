@@ -41,6 +41,6 @@ dependencies {
     if (useLocal == "true") {
         implementation project(path: ':easyfloat')
     } else {
-        implementation 'io.github.shenzhen2017:easyfloat:1.0.1'
+        implementation 'io.github.shenzhen2017:easyfloat:1.0.2'
     }
 }

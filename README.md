@@ -17,6 +17,7 @@
 - 4.可过滤不需要显示悬浮窗的黑名单界面
 - 5.支持自定义点击事件，可支持展开折叠等功能
 - 6.`API`链式调用，使用简洁优雅
+- 7.添加是否可拖动，是否自动靠边的配置和对应状态的获取
 
 ## 集成
 第 1 步:在工程的 `build.gradle` 中添加：
@@ -32,7 +33,7 @@ allprojects {
 第2步：在应用的 `build.gradle` 中添加：
 ```groovy
 dependencies {
-        implementation 'io.github.shenzhen2017:easyfloat:1.0.1'
+        implementation 'io.github.shenzhen2017:easyfloat:1.0.2'
 }
 ```
 
